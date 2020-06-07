@@ -1,4 +1,5 @@
 import Sprite from '../engine/gfx/Sprite.js';
+import { Circle } from '../engine/gfx/shapes/index.js';
 
 export default class Ball {
   constructor(engine, x, y, xv, yv) {
@@ -7,10 +8,18 @@ export default class Ball {
     this.xv = xv || Math.random()*10-5;
     this.yv = yv || Math.random()*10-5;
 
-    this.sprite = new Sprite(engine.images.get('ball'), this.x, this.y, 0.1);
-    engine.register(this.sprite);
+    this.circle = new Circle({
+      x: this.x, y: this.y,
+      radius: 25,
+      color: "#77f",
+    });
+    engine.register(this.circle);
 
     this.life = 30 * 60
+  }
+
+  remove(engine) {
+    engine.unregister(this.circle);
   }
 
   update(engine) {
@@ -32,8 +41,8 @@ export default class Ball {
       this.yv *= -0.9;
     }
 
-    this.sprite.x = this.x;
-    this.sprite.y = this.y;
+    this.circle.x = this.x;
+    this.circle.y = this.y;
 
     this.life--;
   }

@@ -58,7 +58,7 @@ export default class Player {
     var i = this.balls.length;
     while(i--) {
       if(this.balls[i].life < 0) {
-        engine.unregister(this.balls[i].sprite);
+        this.balls[i].remove(engine);
         this.balls.splice(i, 1);
       }
     }

@@ -22,11 +22,9 @@ export default class GameWindow {
   }
 
   unregister(object) {
-    var i = this.objects.length;
-    while(i--) {
-      if ( this.objects[i] === object ) {
-        this.objects.splice(i, 1);
-      }
+    var objectIndex = this.objects.indexOf(object);
+    if ( objectIndex !== -1 ) {
+      this.objects.splice(objectIndex, 1);
     }
   }
 
