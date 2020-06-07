@@ -39,7 +39,7 @@ export default class Player {
       this.sprite.rad = getDirectionFrom(this.pos, event.pos);
     });
 
-    engine.onMouseDown(event => {
+    engine.onMouseClick(event => {
       if ( event.button == 'left' ) {
         var xDir = Math.cos(this.sprite.rad), yDir = Math.sin(this.sprite.rad);
         this.balls.push(new Ball(engine, this.pos.x + xDir * 75, this.pos.y + yDir * 75, xDir * 10, yDir * 10));

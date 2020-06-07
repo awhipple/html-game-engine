@@ -2,11 +2,13 @@ import GameWindow from './gfx/GameWindow.js';
 import ImageLibrary from './gfx/ImageLibrary.js';
 import { KeyNames, MouseButtonNames } from './input/Enums.js';
 import { Coord } from './GameMath.js';
+import Button from './objects/Button.js';
 
 export default class GameEngine {
-  constructor(width, height, canvasId = "gameCanvas") {
-    this.window = new GameWindow(width, height, canvasId);
+  constructor(width, height, options = {}) {
+    this.window = new GameWindow(this, width, height, "gameCanvas");
     this.images = new ImageLibrary();
+    this.images.preload("fullscreen");
 
     this.keyDownCallbacks = [];
     this.pressedKeys = {};
@@ -24,9 +26,15 @@ export default class GameEngine {
       this.mousePos = this.getMouseCoord(event);
     });
 
-    this.onKeyPress(event => {
-      if ( event.key == 'f' ) {
-        this.window.canvas.requestFullscreen();
+    this.fullscreen = false;
+    document.addEventListener('fullscreenchange', (event) => {
+      this.fullscreen = !!document.fullscreenElement;
+    });
+
+    this.images.load().then(() => {
+      if ( options.showFullScreenIcon ) {
+        this.fullscreenButton = new Button(this, this.images.get("fullscreen"), width-20, height-20, 0.05);
+        this.register(this.fullscreenButton);
       }
     });
   }
@@ -51,6 +59,10 @@ export default class GameEngine {
     return this.images.load();
   }
 
+  goFullscreen() {
+    this.window.canvas.requestFullscreen();
+  }
+
   onKeyPress(callback) {
     document.addEventListener('keydown', (event) => {
       callback({key: KeyNames[event.keyCode] || event.keyCode});
@@ -67,7 +79,7 @@ export default class GameEngine {
     });
   }
 
-  onMouseDown(callback) {
+  onMouseClick(callback) {
     this.window.canvas.addEventListener('mousedown', event => {
       callback({button: MouseButtonNames[event.button] || event.button});
     });

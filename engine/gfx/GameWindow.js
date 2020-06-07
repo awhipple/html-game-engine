@@ -1,5 +1,6 @@
 export default class GameWindow {
-  constructor(width, height, canvasId) {
+  constructor(engine, width, height, canvasId) {
+    this.engine = engine;
     this.width = width;
     this.height = height;
     
@@ -26,7 +27,7 @@ export default class GameWindow {
     this.ctx.fillStyle = "#fff";
     this.ctx.fillRect(0, 0, this.width, this.height);
     for(var i = 0; i < this.objects.length; i++) {
-      this.objects[i].draw(this.ctx);
+      this.objects[i].draw(this.ctx, this.engine);
     }
     this.ctx.restore();
   }

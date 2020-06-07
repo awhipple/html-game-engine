@@ -4,8 +4,6 @@ export default class Sprite {
     this.x = x;
     this.y = y;
     this.scale = scale;
-    this.w = img.width * scale;
-    this.h = img.height * scale;
     
     this._rad = 0;
     this.rotated = false;
