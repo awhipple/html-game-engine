@@ -3,7 +3,7 @@ import GameEngine from './engine/GameEngine.js';
 import Player from './gameObjects/Player.js';
 
 window.onload = function() {
-  var engine = new GameEngine(800, 800);
+  var engine = new GameEngine(1200, 800);
   engine.images.preload(["ball", "player"]);
 
   engine.load().then(() => {

@@ -21,8 +21,13 @@ export default class GameEngine {
 
     this.mousePos = new Coord(0, 0);
     this.window.canvas.addEventListener('mousemove', event => {
-      this.mousePos.x = event.layerX;
-      this.mousePos.y = event.layerY;
+      this.mousePos = this.getMouseCoord(event);
+    });
+
+    this.onKeyPress(event => {
+      if ( event.key == 'f' ) {
+        this.window.canvas.requestFullscreen();
+      }
     });
   }
 
@@ -57,8 +62,8 @@ export default class GameEngine {
   }
 
   onMouseMove(callback) {
-    this.window.canvas.addEventListener('mousemove', (event) => {
-      callback({pos: new Coord(event.layerX, event.layerY)});
+    this.window.canvas.addEventListener('mousemove', event => {
+      callback({pos: this.getMouseCoord(event)});
     });
   }
 
@@ -66,5 +71,15 @@ export default class GameEngine {
     this.window.canvas.addEventListener('mousedown', event => {
       callback({button: MouseButtonNames[event.button] || event.button});
     });
+  }
+
+  getMouseCoord(event) {
+    var canvas = this.window.canvas;
+    var rect = canvas.getBoundingClientRect();
+    var scale = canvas.height / rect.height;
+    var subX = rect.width-2 != canvas.width ? 
+      (rect.width - canvas.width/scale) / 2 :
+      rect.left;
+    return new Coord((event.clientX - subX) * scale, (event.clientY - rect.top) * scale);
   }
 }
