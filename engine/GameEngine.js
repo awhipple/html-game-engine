@@ -17,6 +17,13 @@ export default class GameEngine {
       var key = KeyNames[event.keyCode] || event.keyCode;
       delete this.pressedKeys[key];
     });
+
+    this.mouseX = 0;
+    this.mouseY = 0;
+    this.window.canvas.addEventListener('mousemove', event => {
+      this.mouseX = event.layerX;
+      this.mouseY = event.layerY;
+    });
   }
 
   register(object) {

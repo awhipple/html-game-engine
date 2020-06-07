@@ -4,7 +4,7 @@ import Ball from './gameObjects/Ball.js';
 import Player from './gameObjects/Player.js';
 
 window.onload = function() {
-  var BALL_COUNT = 0;
+  var BALL_COUNT = 10;
 
   var engine = new GameEngine(800, 800);
   engine.images.preload(["ball"]);
