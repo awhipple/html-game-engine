@@ -12,13 +12,10 @@ export default class GameEngine {
   }
 
   update(gameLoop) {
-    var img = this.images.get("ball");
-    img.onload = () => setInterval(gameLoop, 1000/60);
+    setInterval(gameLoop, 1000/60);
   }
 
   load() {
-    return new Promise(function(resolve, reject) {
-      resolve();
-    });
+    return this.images.load();
   }
 }

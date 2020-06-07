@@ -2,6 +2,7 @@ export default class ImageLibrary {
   constructor(path = "./images/") {
     this.path = path;
     this.images = {};
+    this.preloadPromises = [];
   }
 
   loadImage(name) {
@@ -15,6 +16,17 @@ export default class ImageLibrary {
   }
 
   preload(name) {
-    
+    if(typeof name == 'string') {
+      name = [ name ];
+    }
+    for(var i = 0; i < name.length; i ++) {
+      this.preloadPromises.push(new Promise((resolve, reject) => {
+        this.get(name[i]).onload = () => {resolve()};
+      }));
+    }
+  }
+
+  load() {
+    return Promise.all(this.preloadPromises);
   }
 }
