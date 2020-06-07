@@ -43,6 +43,10 @@ export default class GameEngine {
     this.window.register(object);
   }
 
+  unregister(object) {
+    this.window.unregister(object);
+  }
+
   update(gameLoop) {
     setInterval(() => {
       var pressedKeys = Object.keys(this.pressedKeys);

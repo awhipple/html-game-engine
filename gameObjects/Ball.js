@@ -9,6 +9,8 @@ export default class Ball {
 
     this.sprite = new Sprite(engine.images.get('ball'), this.x, this.y, 0.1);
     engine.register(this.sprite);
+
+    this.life = 30 * 60
   }
 
   update(engine) {
@@ -32,5 +34,7 @@ export default class Ball {
 
     this.sprite.x = this.x;
     this.sprite.y = this.y;
+
+    this.life--;
   }
 }

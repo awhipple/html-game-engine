@@ -54,5 +54,13 @@ export default class Player {
     for(var i = 0; i < this.balls.length; i++) {
       this.balls[i].update(engine);
     }
+
+    var i = this.balls.length;
+    while(i--) {
+      if(this.balls[i].life < 0) {
+        engine.unregister(this.balls[i].sprite);
+        this.balls.splice(i, 1);
+      }
+    }
   }
 }

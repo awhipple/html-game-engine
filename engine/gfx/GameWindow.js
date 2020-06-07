@@ -21,6 +21,15 @@ export default class GameWindow {
     this.objects.push(object);
   }
 
+  unregister(object) {
+    var i = this.objects.length;
+    while(i--) {
+      if ( this.objects[i] === object ) {
+        this.objects.splice(i, 1);
+      }
+    }
+  }
+
   draw() {
     requestAnimationFrame(() => this.draw());
     this.ctx.save();
