@@ -1,15 +1,22 @@
-import GameWindow from './engine/GameWindow.js';
+import GameEngine from './engine/GameEngine.js';
+
 import { Rectangle } from './engine/shapes/index.js';
+import Sprite from './engine/Sprite.js';
 
 window.onload = function() {
-  var gw = new GameWindow("gameCanvas");
+  var engine = new GameEngine(800, 800);
+  engine.images.preload("ball");
+
+  engine.load().then(() => {
+    var rect = new Rectangle(0, 400, 10, 10, "#f00");
+    engine.register(rect);
   
-  var rect = new Rectangle(200, 200, 10, 10, "#f00");
-
-  setInterval(() => {
-    rect.x++;
-    if(rect.x == 500) rect.x = 0;
-  }, 1000/60);
-
-  gw.register(rect);
+    var sprite = new Sprite(engine.images.get('ball'), 100, 100, 100, 100);
+    engine.register(sprite);
+  
+    engine.update(() => {
+      rect.x++;
+      if(rect.x == engine.window.width) rect.x = 0;
+    });
+  });
 }
