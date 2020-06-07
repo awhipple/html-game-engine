@@ -1,4 +1,4 @@
-import Sprite from "../engine/Sprite.js";
+import Sprite from "../engine/gfx/Sprite.js";
 import { getDirectionFrom, Coord } from "../engine/GameMath.js";
 import Ball from "./Ball.js";
 

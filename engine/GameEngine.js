@@ -1,5 +1,5 @@
-import GameWindow from './GameWindow.js';
-import ImageLibrary from './ImageLibrary.js';
+import GameWindow from './gfx/GameWindow.js';
+import ImageLibrary from './gfx/ImageLibrary.js';
 import { KeyNames, MouseButtonNames } from './input/Enums.js';
 import { Coord } from './GameMath.js';
 

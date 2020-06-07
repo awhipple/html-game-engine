@@ -1,4 +1,4 @@
-import Sprite from '../engine/Sprite.js';
+import Sprite from '../engine/gfx/Sprite.js';
 
 export default class Ball {
   constructor(engine, x, y, xv, yv) {
