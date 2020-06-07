@@ -1,6 +1,7 @@
 import GameWindow from './GameWindow.js';
 import ImageLibrary from './ImageLibrary.js';
-import KeyNames from './input/KeyNames.js';
+import { KeyNames, MouseButtonNames } from './input/Enums.js';
+import { Coord } from './GameMath.js';
 
 export default class GameEngine {
   constructor(width, height, canvasId = "gameCanvas") {
@@ -18,11 +19,10 @@ export default class GameEngine {
       delete this.pressedKeys[key];
     });
 
-    this.mouseX = 0;
-    this.mouseY = 0;
+    this.mousePos = new Coord(0, 0);
     this.window.canvas.addEventListener('mousemove', event => {
-      this.mouseX = event.layerX;
-      this.mouseY = event.layerY;
+      this.mousePos.x = event.layerX;
+      this.mousePos.y = event.layerY;
     });
   }
 
@@ -54,5 +54,17 @@ export default class GameEngine {
 
   onKeyDown(callback) {
     this.keyDownCallbacks.push(callback);
+  }
+
+  onMouseMove(callback) {
+    this.window.canvas.addEventListener('mousemove', (event) => {
+      callback({pos: new Coord(event.layerX, event.layerY)});
+    });
+  }
+
+  onMouseDown(callback) {
+    this.window.canvas.addEventListener('mousedown', event => {
+      callback({button: MouseButtonNames[event.button] || event.button});
+    });
   }
 }

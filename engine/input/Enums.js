@@ -1,4 +1,4 @@
-export default {
+var KeyNames = {
   8:  "backspace",
   9:  "tab",
   13: "enter",
@@ -65,3 +65,11 @@ export default {
   221: ']',
   222: '\'',
 }
+
+var MouseButtonNames = {
+  0: "left",
+  1: "middle",
+  2: "right",
+}
+
+export { KeyNames, MouseButtonNames }

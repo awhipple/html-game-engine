@@ -1,33 +1,58 @@
 import Sprite from "../engine/Sprite.js";
+import { getDirectionFrom, Coord } from "../engine/GameMath.js";
+import Ball from "./Ball.js";
 
 export default class Player {
   constructor(engine) {
-    this.x = engine.window.width/2;
-    this.y = engine.window.height/2;
+    this.pos = new Coord(
+      engine.window.width / 2,
+      engine.window.height / 2,
+    );
 
-    this.sprite = new Sprite(engine.images.get('ball'), this.x, this.y, 50, 50);
+    this.sprite = new Sprite(engine.images.get('player'), this.pos.x, this.pos.y, 0.3);
     engine.register(this.sprite);
 
-    engine.onKeyDown((event) => {
+    this.balls = [];
+
+    engine.onKeyDown(event => {
       switch(event.key) {
-        case "left":
-          this.x -= 10;
+        case "a":
+          this.pos.x -= 10;
           break;
-        case "right":
-          this.x += 10;
+        case "d":
+          this.pos.x += 10;
           break;
-        case "up":
-          this.y -= 10;
+        case "w":
+          this.pos.y -= 10;
           break;
-        case "down":
-          this.y += 10;
+        case "s":
+          this.pos.y += 10;
           break;
+      };
+
+      if ( ["a", "d", "w", "s"].includes(event.key)) {
+        this.sprite.rad = getDirectionFrom(this.pos, engine.mousePos);
+      }
+    });
+
+    engine.onMouseMove(event => {
+      this.sprite.rad = getDirectionFrom(this.pos, event.pos);
+    });
+
+    engine.onMouseDown(event => {
+      if ( event.button == 'left' ) {
+        var xDir = Math.cos(this.sprite.rad), yDir = Math.sin(this.sprite.rad);
+        this.balls.push(new Ball(engine, this.pos.x + xDir * 75, this.pos.y + yDir * 75, xDir * 10, yDir * 10));
       }
     });
   }
 
   update(engine) {
-    this.sprite.x = this.x;
-    this.sprite.y = this.y;
+    this.sprite.x = this.pos.x;
+    this.sprite.y = this.pos.y;
+
+    for(var i = 0; i < this.balls.length; i++) {
+      this.balls[i].update(engine);
+    }
   }
 }

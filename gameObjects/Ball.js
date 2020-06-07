@@ -1,13 +1,13 @@
 import Sprite from '../engine/Sprite.js';
 
 export default class Ball {
-  constructor(engine) {
-    this.x = Math.random()*(engine.window.width-50)+25;
-    this.y = Math.random()*(engine.window.height-50)+25;
-    this.xv = Math.random()*10-5;
-    this.yv = Math.random()*10-5;
+  constructor(engine, x, y, xv, yv) {
+    this.x = x || Math.random()*(engine.window.width-50)+25;
+    this.y = y || Math.random()*(engine.window.height-50)+25;
+    this.xv = xv || Math.random()*10-5;
+    this.yv = yv || Math.random()*10-5;
 
-    this.sprite = new Sprite(engine.images.get('ball'), this.x, this.y, 50, 50);
+    this.sprite = new Sprite(engine.images.get('ball'), this.x, this.y, 0.1);
     engine.register(this.sprite);
   }
 
